@@ -28,7 +28,7 @@
     	<property name="dataSource" ref="dataSource"></property>
     	<property name="typeAliasesPackage" value="jinsha.pojo"></property>
 		<!-- sql映射文件路径 -->
-		<property name="mapperLocations" value="classpath*:jinsha/mapper/*Mapper.xml"></property>
+		<property name="mapperLocations" value="classpath:jinsha/mapper/*Mapper.xml"></property>
     </bean>
     <!-- 扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jinsha.mapper.ProductMapper">
+    <select id="selectAllByPid" parameterType="int" resultType="ItemCat">
+        select * from item_cat where parentId = #{pid}
+    </select>
+
+    <select id="selectNewItems" resultType="Item">
+        select * from item order by created desc limit 0,8
+    </select>
+
+    <select id="selectHotItems" resultType="Item">
+        select * from item order by saleCount desc limit 0,8
+    </select>
+
+    <select id="selectListByItemCatId" parameterType="int" resultType="Item">
+        select * from item where cid = #{cid}
+    </select>
+
+    <select id="selectItemById" parameterType="int" resultType="Item">
+        select * from item where id = #{id}
+    </select>
+
+    <select id="selectByLikeTitle" parameterType="java.lang.String" resultType="Item">
+        select * from item where title like CONCAT('%',#{title},'%')
+    </select>
+
+    <select id="selectByLikeName" parameterType="java.lang.String" resultType="ItemCat">
+       select * from item_cat where itemName like CONCAT('%',#{name},'%')
+    </select>
+
+    <select id="selectGoodItems" resultType="ItemComment">
+       select itemId, avg(record) as 'avgRecord' from item_comment group by itemId order by avgRecord desc limit 0, 8
+    </select>
+</mapper>

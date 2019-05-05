@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jinsha.mapper.UserMapper">
+    <select id="selectOneByUsername" parameterType="String" resultType="User">
+        select * from user where username = #{username}
+    </select>
+    <insert id="insertOneUser" parameterType="User">
+        insert into user (username,password,phone,created,picture) values (#{username},#{password},#{phone},#{created},#{picture})
+    </insert>
+
+    <select id="selectOneByUserId" parameterType="int" resultType="User">
+        select * from user where id = #{uid}
+    </select>
+
+    <select id="selectUsersByPid" parameterType="int" resultType="User">
+        select * from user where pid = #{pid}
+    </select>
+
+</mapper>

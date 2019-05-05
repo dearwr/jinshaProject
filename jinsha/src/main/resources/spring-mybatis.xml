@@ -16,11 +16,12 @@
     <context:component-scan base-package="jinsha.service.impl"></context:component-scan>
     <!-- 加载属性文件 -->
     <context:property-placeholder location="classpath:db.properties"/>
+
     <!-- 数据源 -->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    	<property name="driverClassName" value="${jdbc.driver}"></property>
-    	<property name="url" value="${jdbc.url}"></property>
-    	<property name="username" value="${jdbc.username}"></property>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    	<property name="driverClass" value="${jdbc.driver}"></property>
+    	<property name="jdbcUrl" value="${jdbc.url}"></property>
+    	<property name="user" value="${jdbc.username}"></property>
     	<property name="password" value="${jdbc.password}"></property>
     </bean>
     <!-- SqlSessionFactory -->
@@ -28,7 +29,7 @@
     	<property name="dataSource" ref="dataSource"></property>
     	<property name="typeAliasesPackage" value="jinsha.pojo"></property>
 		<!-- sql映射文件路径 -->
-		<property name="mapperLocations" value="classpath:jinsha/mapper/*Mapper.xml"></property>
+		<property name="mapperLocations" value="classpath:mapperXml/*.xml"></property>
     </bean>
     <!-- 扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -45,9 +46,12 @@
     		<tx:method name="ins*"/>
     		<tx:method name="del*"/>
     		<tx:method name="upd*"/>
-    		<tx:method name="*" read-only="true"/>
     	</tx:attributes>
     </tx:advice>
+	<!-- 配置基于注解的声明式事务
+        默认使用注解来管理事务行为
+     -->
+	<tx:annotation-driven transaction-manager="txManage"/>
     <!-- 配置aop -->
     <aop:config>
     	<aop:pointcut expression="execution(* jinsha.service.impl.*.*(..))" id="mypoint"/>
